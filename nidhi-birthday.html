@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Nidhi 🌸</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #050508;
+    --deep: #0a0812;
+    --accent1: #ff6b9d;
+    --accent2: #c084fc;
+    --accent3: #f472b6;
+    --gold: #fbbf24;
+    --soft: #fce7f3;
+    --glow: rgba(255,107,157,0.4);
+    --glow2: rgba(192,132,252,0.3);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--soft);
+    font-family: 'Cormorant Garamond', serif;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* ===== CANVAS LAYER ===== */
+  #canvas-layer {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  /* ===== STAR BACKGROUND ===== */
+  .stars {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle var(--dur) ease-in-out infinite alternate;
+  }
+  @keyframes twinkle {
+    from { opacity: 0.1; transform: scale(0.8); }
+    to { opacity: 0.9; transform: scale(1.2); }
+  }
+
+  /* ===== PROGRESS BAR ===== */
+  #progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent1), var(--accent2), var(--gold));
+    z-index: 1000;
+    transition: width 0.1s linear;
+    box-shadow: 0 0 10px var(--glow);
+  }
+
+  /* ===== SECTIONS ===== */
+  .scene {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 40px;
+    z-index: 1;
+    text-align: center;
+  }
+
+  /* ===== HERO ===== */
+  #hero {
+    min-height: 100vh;
+    background: radial-gradient(ellipse at 50% 40%, #1a0a2e 0%, #050508 70%);
+    overflow: hidden;
+  }
+
+  .hero-glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+  }
+  .hero-glow-1 {
+    width: 600px; height: 600px;
+    background: rgba(192,132,252,0.12);
+    top: -100px; left: -100px;
+    animation: driftGlow1 8s ease-in-out infinite alternate;
+  }
+  .hero-glow-2 {
+    width: 500px; height: 500px;
+    background: rgba(255,107,157,0.15);
+    bottom: -100px; right: -100px;
+    animation: driftGlow2 10s ease-in-out infinite alternate;
+  }
+  @keyframes driftGlow1 {
+    to { transform: translate(60px, 40px); }
+  }
+  @keyframes driftGlow2 {
+    to { transform: translate(-60px, -40px); }
+  }
+
+  .hero-date {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    font-weight: 300;
+    letter-spacing: 0.5em;
+    color: var(--accent2);
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.3s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.5rem, 12vw, 9rem);
+    font-weight: 900;
+    font-style: italic;
+    line-height: 0.9;
+    background: linear-gradient(135deg, #fff 0%, var(--accent3) 40%, var(--accent2) 70%, var(--gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 40px rgba(255,107,157,0.5));
+    opacity: 0;
+    animation: fadeUp 1.2s ease 0.6s forwards;
+    margin-bottom: 1rem;
+  }
+
+  .hero-name {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(2.5rem, 8vw, 6rem);
+    color: var(--gold);
+    text-shadow: 0 0 60px rgba(251,191,36,0.6), 0 0 120px rgba(251,191,36,0.2);
+    opacity: 0;
+    animation: fadeUp 1.2s ease 1s forwards, nameGlow 3s ease-in-out 2s infinite alternate;
+    margin-bottom: 2rem;
+  }
+  @keyframes nameGlow {
+    from { text-shadow: 0 0 60px rgba(251,191,36,0.6); }
+    to { text-shadow: 0 0 80px rgba(251,191,36,0.9), 0 0 40px rgba(255,107,157,0.5); }
+  }
+
+  .hero-hearts {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    font-size: 2rem;
+    opacity: 0;
+    animation: fadeUp 1s ease 1.4s forwards;
+    margin-bottom: 3rem;
+  }
+  .heart-float {
+    display: inline-block;
+    animation: heartFloat 2s ease-in-out infinite alternate;
+  }
+  .heart-float:nth-child(2) { animation-delay: 0.3s; }
+  .heart-float:nth-child(3) { animation-delay: 0.6s; }
+  .heart-float:nth-child(4) { animation-delay: 0.9s; }
+  .heart-float:nth-child(5) { animation-delay: 1.2s; }
+  @keyframes heartFloat {
+    from { transform: translateY(0); }
+    to { transform: translateY(-10px); }
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    animation: fadeIn 1s ease 2.5s forwards;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: rgba(255,255,255,0.4);
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+  }
+  .scroll-arrow {
+    width: 24px;
+    height: 24px;
+    border-right: 2px solid rgba(255,107,157,0.5);
+    border-bottom: 2px solid rgba(255,107,157,0.5);
+    transform: rotate(45deg);
+    animation: scrollBounce 1.5s ease-in-out infinite;
+  }
+  @keyframes scrollBounce {
+    0%, 100% { transform: rotate(45deg) translateY(0); opacity: 0.4; }
+    50% { transform: rotate(45deg) translateY(6px); opacity: 1; }
+  }
+
+  /* ===== WISH CARDS ===== */
+  .wish-scene {
+    min-height: 100vh;
+    padding: 100px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .wish-card {
+    max-width: 780px;
+    width: 100%;
+    position: relative;
+    opacity: 0;
+    transform: translateY(60px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+  .wish-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .card-number {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(5rem, 15vw, 12rem);
+    font-weight: 900;
+    font-style: italic;
+    position: absolute;
+    top: -40px;
+    left: -20px;
+    opacity: 0.04;
+    color: var(--accent1);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .card-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, rgba(255,107,157,0.15), rgba(192,132,252,0.1));
+    border: 1px solid rgba(255,107,157,0.25);
+    border-radius: 100px;
+    padding: 6px 20px;
+    font-size: 0.75rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--accent1);
+    margin-bottom: 2rem;
+  }
+
+  .card-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 5vw, 3.5rem);
+    font-weight: 700;
+    font-style: italic;
+    line-height: 1.15;
+    margin-bottom: 1.8rem;
+    background: linear-gradient(135deg, #fff 0%, var(--soft) 60%, var(--accent3) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .card-body {
+    font-size: clamp(1rem, 2.5vw, 1.35rem);
+    font-weight: 300;
+    line-height: 1.95;
+    color: rgba(252,231,243,0.75);
+    font-style: italic;
+  }
+
+  .card-body em {
+    color: var(--accent3);
+    font-style: normal;
+  }
+
+  .card-divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 2.5rem 0;
+  }
+  .card-divider::before,
+  .card-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,107,157,0.3), transparent);
+  }
+  .card-divider-icon {
+    color: var(--accent1);
+    font-size: 1.2rem;
+  }
+
+  /* BIG scenes */
+  .scene-dark {
+    background: radial-gradient(ellipse at 30% 50%, rgba(26,10,46,0.8) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 50%, rgba(10,8,18,0.9) 0%, transparent 60%);
+  }
+
+  .scene-rose {
+    background: radial-gradient(ellipse at 60% 40%, rgba(40,5,20,0.9) 0%, transparent 70%);
+  }
+
+  /* ===== QUOTE SCENES ===== */
+  .quote-scene {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 40px;
+    position: relative;
+  }
+
+  .big-quote {
+    max-width: 900px;
+    text-align: center;
+  }
+
+  .big-quote-mark {
+    font-family: 'Playfair Display', serif;
+    font-size: 8rem;
+    line-height: 0.5;
+    color: rgba(255,107,157,0.15);
+    display: block;
+    margin-bottom: -1rem;
+  }
+
+  .big-quote-text {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(1.6rem, 4.5vw, 3.2rem);
+    line-height: 1.5;
+    color: rgba(252,231,243,0.9);
+    margin-bottom: 1.5rem;
+  }
+
+  .big-quote-attr {
+    font-size: 0.85rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent2);
+  }
+
+  /* ===== COUNTDOWN SCENE ===== */
+  #countdown-scene {
+    background: radial-gradient(ellipse at center, rgba(20,0,40,0.95) 0%, var(--bg) 80%);
+  }
+
+  .countdown-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 3rem;
+  }
+
+  .countdown-grid {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+  }
+
+  .count-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .count-num {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--accent1), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    min-width: 2ch;
+    text-align: center;
+  }
+
+  .count-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+  }
+
+  /* ===== FINALE SCENE ===== */
+  #finale {
+    min-height: 100vh;
+    background: radial-gradient(ellipse at center, #1a0a2e 0%, #050508 80%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 80px 40px;
+  }
+
+  .finale-inner { max-width: 700px; }
+
+  .finale-emoji {
+    font-size: 5rem;
+    display: block;
+    margin-bottom: 2rem;
+    animation: finaleEmoji 2s ease-in-out infinite alternate;
+  }
+  @keyframes finaleEmoji {
+    from { transform: scale(1) rotate(-5deg); }
+    to { transform: scale(1.1) rotate(5deg); }
+  }
+
+  .finale-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(3rem, 9vw, 6rem);
+    color: var(--gold);
+    text-shadow: 0 0 60px rgba(251,191,36,0.7);
+    margin-bottom: 1.5rem;
+  }
+
+  .finale-msg {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1.1rem, 3vw, 1.7rem);
+    font-weight: 300;
+    color: rgba(252,231,243,0.8);
+    line-height: 1.8;
+    margin-bottom: 3rem;
+  }
+
+  .finale-sig {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    color: var(--accent3);
+    text-shadow: 0 0 30px rgba(244,114,182,0.5);
+  }
+
+  /* ===== VISUAL SEPARATORS ===== */
+  .sep {
+    text-align: center;
+    padding: 60px 0 20px;
+    position: relative;
+    z-index: 1;
+  }
+  .sep-petals {
+    font-size: 2.5rem;
+    animation: spinSep 6s linear infinite;
+    display: inline-block;
+  }
+  @keyframes spinSep { to { transform: rotate(360deg); } }
+
+  /* ===== MEMORY STRIP ===== */
+  .memory-strip {
+    padding: 80px 40px;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .memory-label {
+    font-size: 0.8rem;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 3rem;
+  }
+
+  .memory-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .memory-item {
+    background: rgba(255,107,157,0.05);
+    border: 1px solid rgba(255,107,157,0.12);
+    border-radius: 16px;
+    padding: 1.5rem;
+    font-style: italic;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: rgba(252,231,243,0.7);
+    transition: all 0.4s ease;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  .memory-item.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .memory-item:hover {
+    background: rgba(255,107,157,0.1);
+    border-color: rgba(255,107,157,0.3);
+    color: rgba(252,231,243,0.95);
+    transform: translateY(-4px);
+  }
+  .memory-item-icon {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 0.75rem;
+  }
+
+  /* ===== PROMISE SCENE ===== */
+  .promise-list {
+    list-style: none;
+    text-align: left;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .promise-item {
+    display: flex;
+    gap: 1.2rem;
+    align-items: flex-start;
+    padding: 1.2rem 0;
+    border-bottom: 1px solid rgba(255,107,157,0.08);
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .promise-item.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  .promise-item:nth-child(2) { transition-delay: 0.1s; }
+  .promise-item:nth-child(3) { transition-delay: 0.2s; }
+  .promise-item:nth-child(4) { transition-delay: 0.3s; }
+  .promise-item:nth-child(5) { transition-delay: 0.4s; }
+  .promise-item:nth-child(6) { transition-delay: 0.5s; }
+  .promise-item:nth-child(7) { transition-delay: 0.6s; }
+
+  .promise-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .promise-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: rgba(252,231,243,0.8);
+  }
+
+  /* ===== ANIMATIONS ===== */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 600px) {
+    .scene { padding: 60px 24px; }
+    .wish-scene { padding: 60px 24px; }
+    .card-number { display: none; }
+    .countdown-grid { gap: 1rem; }
+  }
+
+  /* ===== BG gradient bands ===== */
+  .band {
+    position: relative;
+    z-index: 1;
+  }
+  .band-1 { background: linear-gradient(180deg, transparent, rgba(26,10,46,0.6) 50%, transparent); }
+  .band-2 { background: linear-gradient(180deg, transparent, rgba(40,5,20,0.5) 50%, transparent); }
+  .band-3 { background: linear-gradient(180deg, transparent, rgba(5,5,20,0.7) 50%, transparent); }
+</style>
+</head>
+<body>
+
+<!-- Progress bar -->
+<div id="progress"></div>
+
+<!-- Star background -->
+<div class="stars" id="stars"></div>
+
+<!-- Canvas for balloons + sakura -->
+<canvas id="canvas-layer"></canvas>
+
+<!-- ===== HERO ===== -->
+<section id="hero" class="scene">
+  <div class="hero-glow hero-glow-1"></div>
+  <div class="hero-glow hero-glow-2"></div>
+  <div class="hero-date">19th May · A Day of Magic</div>
+  <h1 class="hero-title">Happy<br>Birthday</h1>
+  <div class="hero-name">Nidhi ✨</div>
+  <div class="hero-hearts">
+    <span class="heart-float">🌸</span>
+    <span class="heart-float">💖</span>
+    <span class="heart-float">🌸</span>
+    <span class="heart-float">💖</span>
+    <span class="heart-float">🌸</span>
+  </div>
+  <div class="scroll-hint">
+    <span>Scroll to feel the love</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- ===== WISH 1 ===== -->
+<section class="wish-scene band-1">
+  <div class="wish-card" data-observe>
+    <div class="card-number">01</div>
+    <div class="card-tag">✦ My Heart ✦</div>
+    <h2 class="card-heading">The Day the Universe<br>Gave Me Everything</h2>
+    <div class="card-divider"><span class="card-divider-icon">🌸</span></div>
+    <p class="card-body">
+      On this beautiful day, many years ago, the world received the most extraordinary gift — <em>you</em>.
+      The stars aligned, flowers bloomed a little brighter, and somewhere across the universe,
+      a story was written — the story of a woman who would one day become my entire world.
+      Today, my love, we celebrate <em>that miracle</em>. We celebrate you.
+    </p>
+  </div>
+</section>
+
+<!-- ===== QUOTE 1 ===== -->
+<section class="quote-scene">
+  <div class="big-quote" data-observe>
+    <span class="big-quote-mark">"</span>
+    <p class="big-quote-text">She is not just the love of my life — she is the reason I believe in magic.</p>
+    <span class="big-quote-attr">— Written for you, always</span>
+  </div>
+</section>
+
+<!-- ===== WISH 2 ===== -->
+<section class="wish-scene band-2">
+  <div class="wish-card" data-observe>
+    <div class="card-number">02</div>
+    <div class="card-tag">✦ Your Light ✦</div>
+    <h2 class="card-heading">You Are the Warmth<br>in Every Room</h2>
+    <div class="card-divider"><span class="card-divider-icon">💫</span></div>
+    <p class="card-body">
+      There is a rare kind of person who walks into a room and changes its entire atmosphere —
+      who makes ordinary Tuesday afternoons feel like golden-hour summers. That person is <em>you</em>, Nidhi.
+      Your laughter is the soundtrack I never want to end. Your smile is the sunrise I chase every single day.
+      You make the world <em>shimmer</em>.
+    </p>
+  </div>
+</section>
+
+<!-- ===== WISH 3 ===== -->
+<section class="wish-scene band-3">
+  <div class="wish-card" data-observe>
+    <div class="card-number">03</div>
+    <div class="card-tag">✦ Our Story ✦</div>
+    <h2 class="card-heading">Every Chapter Written<br>With You Is My Favorite</h2>
+    <div class="card-divider"><span class="card-divider-icon">📖</span></div>
+    <p class="card-body">
+      I think about the journey we've taken together — the mornings, the chaos, the quiet evenings,
+      the inside jokes no one else would understand. Every memory with you is a treasure I hold close.
+      Even the hard days were beautiful because <em>you</em> were in them.
+      I wouldn't trade a single page of our story for anything in this world.
+    </p>
+  </div>
+</section>
+
+<!-- ===== MEMORIES ===== -->
+<div class="memory-strip band-1">
+  <div class="memory-label">✦ Moments I treasure ✦</div>
+  <div class="memory-list">
+    <div class="memory-item" data-observe>
+      <span class="memory-item-icon">☕</span>
+      "The way you hold your morning tea like it's the most precious thing in the world"
+    </div>
+    <div class="memory-item" data-observe>
+      <span class="memory-item-icon">🌙</span>
+      "Late nights when you laugh at something and can't stop — my favourite sound in existence"
+    </div>
+    <div class="memory-item" data-observe>
+      <span class="memory-item-icon">🌸</span>
+      "How you make everything feel like home, no matter where we are"
+    </div>
+    <div class="memory-item" data-observe>
+      <span class="memory-item-icon">💌</span>
+      "The little things you do without realizing — they mean everything to me"
+    </div>
+    <div class="memory-item" data-observe>
+      <span class="memory-item-icon">🎵</span>
+      "Dancing in the kitchen when you think no one's watching"
+    </div>
+    <div class="memory-item" data-observe>
+      <span class="memory-item-icon">🌟</span>
+      "The way your eyes light up when something truly makes you happy"
+    </div>
+  </div>
+</div>
+
+<!-- ===== WISH 4 ===== -->
+<section class="wish-scene band-2">
+  <div class="wish-card" data-observe>
+    <div class="card-number">04</div>
+    <div class="card-tag">✦ Your Strength ✦</div>
+    <h2 class="card-heading">You Are Stronger<br>Than You Will Ever Know</h2>
+    <div class="card-divider"><span class="card-divider-icon">🦋</span></div>
+    <p class="card-body">
+      I have watched you carry things that would break most people — and do it with <em>grace</em>.
+      I have seen you face the hard days, dust yourself off, and rise again with a fire that humbles me.
+      You are the bravest soul I know. Not the loud, armored kind of brave —
+      but the quiet, every-single-day kind. <em>The realest kind.</em>
+    </p>
+  </div>
+</section>
+
+<!-- ===== QUOTE 2 ===== -->
+<section class="quote-scene band-3">
+  <div class="big-quote" data-observe>
+    <span class="big-quote-mark">"</span>
+    <p class="big-quote-text">In a universe of seven billion people,<br>I would find you in every single lifetime.</p>
+    <span class="big-quote-attr">— Always and forever yours</span>
+  </div>
+</section>
+
+<!-- ===== WISH 5 ===== -->
+<section class="wish-scene band-1">
+  <div class="wish-card" data-observe>
+    <div class="card-number">05</div>
+    <div class="card-tag">✦ Your Dreams ✦</div>
+    <h2 class="card-heading">May Every Dream You Hold<br>Find Its Way to You</h2>
+    <div class="card-divider"><span class="card-divider-icon">🌠</span></div>
+    <p class="card-body">
+      On your birthday, I wish for you everything your beautiful heart desires.
+      May your dreams not just stay as dreams — may they arrive, fully formed, at your doorstep.
+      May this year be the year things <em>bloom</em> for you in ways you never expected.
+      May you receive everything you deserve — which is <em>absolutely everything</em>.
+    </p>
+  </div>
+</section>
+
+<!-- ===== WISH 6 ===== -->
+<section class="wish-scene band-2">
+  <div class="wish-card" data-observe>
+    <div class="card-number">06</div>
+    <div class="card-tag">✦ My Vow ✦</div>
+    <h2 class="card-heading">I Choose You Today,<br>Tomorrow, and Always</h2>
+    <div class="card-divider"><span class="card-divider-icon">💍</span></div>
+    <p class="card-body">
+      Love is not just a feeling — it's a choice you make, again and again, every single morning.
+      And every morning, without hesitation, without question, I choose <em>you</em>.
+      I choose your laugh, your quirks, your fire, your tenderness.
+      I choose the complicated and the beautiful. I choose all of it. I choose <em>Nidhi</em>.
+    </p>
+  </div>
+</section>
+
+<!-- ===== PROMISES ===== -->
+<div class="memory-strip band-3">
+  <div class="memory-label">✦ My promises to you ✦</div>
+  <ul class="promise-list">
+    <li class="promise-item" data-observe>
+      <span class="promise-icon">🌸</span>
+      <span class="promise-text">I promise to be your safe place — always, in every storm and every season.</span>
+    </li>
+    <li class="promise-item" data-observe>
+      <span class="promise-icon">💫</span>
+      <span class="promise-text">I promise to celebrate every tiny win with the same joy as the biggest ones.</span>
+    </li>
+    <li class="promise-item" data-observe>
+      <span class="promise-icon">🎂</span>
+      <span class="promise-text">I promise to make every birthday more special than the last — for the rest of our lives.</span>
+    </li>
+    <li class="promise-item" data-observe>
+      <span class="promise-icon">🌙</span>
+      <span class="promise-text">I promise to hold your hand through every darkness until we find the light together.</span>
+    </li>
+    <li class="promise-item" data-observe>
+      <span class="promise-icon">☀️</span>
+      <span class="promise-text">I promise to remind you how extraordinary you are, every single day, without fail.</span>
+    </li>
+    <li class="promise-item" data-observe>
+      <span class="promise-icon">❤️</span>
+      <span class="promise-text">I promise that my love for you will only grow deeper with every passing year.</span>
+    </li>
+    <li class="promise-item" data-observe>
+      <span class="promise-icon">✨</span>
+      <span class="promise-text">I promise to always be the person cheering loudest for you — now and forever.</span>
+    </li>
+  </ul>
+</div>
+
+<!-- ===== WISH 7 ===== -->
+<section class="wish-scene band-1">
+  <div class="wish-card" data-observe>
+    <div class="card-number">07</div>
+    <div class="card-tag">✦ This Year ✦</div>
+    <h2 class="card-heading">A Year Filled With<br>All Your Favourite Things</h2>
+    <div class="card-divider"><span class="card-divider-icon">🎊</span></div>
+    <p class="card-body">
+      May this new year of your life be painted in your favourite colours.
+      May it hold <em>adventure and rest</em> in equal measure. May it bring laughter that echoes,
+      love that deepens, friendships that flourish, and quiet moments that fill your soul.
+      May it be a year you look back on and smile — a year that was <em>truly yours</em>.
+    </p>
+  </div>
+</section>
+
+<!-- ===== WISH 8 ===== -->
+<section class="wish-scene band-2">
+  <div class="wish-card" data-observe>
+    <div class="card-number">08</div>
+    <div class="card-tag">✦ You & Me ✦</div>
+    <h2 class="card-heading">The Best Adventures<br>Are Still Ahead of Us</h2>
+    <div class="card-divider"><span class="card-divider-icon">🗺️</span></div>
+    <p class="card-body">
+      We are still at the beginning, you and I. The story we're writing together has so many pages left —
+      so many mornings to share, so many places to discover, so many memories yet to make.
+      I am so <em>excited</em> for all of it. For all the ordinary tuesdays and the extraordinary moments.
+      For all the <em>us</em> that is still to come.
+    </p>
+  </div>
+</section>
+
+<!-- ===== QUOTE 3 ===== -->
+<section class="quote-scene band-3">
+  <div class="big-quote" data-observe>
+    <span class="big-quote-mark">"</span>
+    <p class="big-quote-text">Thank you for existing. Thank you for being exactly who you are. Thank you for being mine.</p>
+    <span class="big-quote-attr">— With all my heart</span>
+  </div>
+</section>
+
+<!-- ===== WISH 9 ===== -->
+<section class="wish-scene band-1">
+  <div class="wish-card" data-observe>
+    <div class="card-number">09</div>
+    <div class="card-tag">✦ Forever ✦</div>
+    <h2 class="card-heading">No Distance, No Time,<br>No Force Could Change This</h2>
+    <div class="card-divider"><span class="card-divider-icon">♾️</span></div>
+    <p class="card-body">
+      Across every version of this life, in every possible universe, I am certain of one thing:
+      I would always find you. I would always <em>know</em> you. And I would always, always love you.
+      That is not romance speaking — that is the deepest truth I carry.
+      You are the constant in every equation. The answer I keep arriving at. <em>Always you.</em>
+    </p>
+  </div>
+</section>
+
+<!-- ===== WISH 10 ===== -->
+<section class="wish-scene band-2">
+  <div class="wish-card" data-observe>
+    <div class="card-number">10</div>
+    <div class="card-tag">✦ Right Now ✦</div>
+    <h2 class="card-heading">In This Moment,<br>Know You Are So Loved</h2>
+    <div class="card-divider"><span class="card-divider-icon">💝</span></div>
+    <p class="card-body">
+      As you read this, in this very moment, know that someone is thinking of you with a heart
+      so full it could burst. Know that <em>you are cherished</em> in ways that words can barely hold.
+      Know that your life matters, your joy matters, your presence in this world matters —
+      and that to me, you are <em>the most important person who has ever lived</em>.
+    </p>
+  </div>
+</section>
+
+<!-- ===== COUNTDOWN ===== -->
+<section id="countdown-scene" class="scene band-3">
+  <div class="countdown-label">✦ You've been making this world beautiful for ✦</div>
+  <div class="countdown-grid" id="age-display">
+    <div class="count-box">
+      <div class="count-num" id="c-years">—</div>
+      <div class="count-label">Years</div>
+    </div>
+    <div class="count-box">
+      <div class="count-num" id="c-days">—</div>
+      <div class="count-label">Days</div>
+    </div>
+    <div class="count-box">
+      <div class="count-num" id="c-hours">—</div>
+      <div class="count-label">Hours</div>
+    </div>
+    <div class="count-box">
+      <div class="count-num" id="c-mins">—</div>
+      <div class="count-label">Minutes</div>
+    </div>
+  </div>
+  <p style="font-style:italic; color: rgba(252,231,243,0.5); font-size: 1rem; max-width: 500px; line-height: 1.8;">
+    Every single one of those moments has shaped the incredible woman you are today.
+  </p>
+</section>
+
+<!-- ===== FINALE ===== -->
+<section id="finale">
+  <div class="finale-inner" data-observe>
+    <span class="finale-emoji">🎂</span>
+    <div class="finale-title">Happy Birthday,<br>My Nidhi</div>
+    <p class="finale-msg">
+      Today is your day. This whole beautiful world is celebrating the fact that you exist.
+      And no one is celebrating harder, no one is more grateful, no one loves you more —
+      than me. Happy birthday, my love. My heart. My home. 🌸
+    </p>
+    <div class="finale-sig">— Forever Yours, with endless love 💖</div>
+  </div>
+</section>
+
+<!-- ===== SCRIPTS ===== -->
+<script>
+// ===== STARS =====
+(function() {
+  const starsEl = document.getElementById('stars');
+  for (let i = 0; i < 150; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const size = Math.random() * 2.5 + 0.5;
+    s.style.cssText = `
+      width:${size}px; height:${size}px;
+      left:${Math.random()*100}%; top:${Math.random()*100}%;
+      --dur:${2+Math.random()*4}s;
+      animation-delay:${Math.random()*4}s;
+    `;
+    starsEl.appendChild(s);
+  }
+})();
+
+// ===== PROGRESS BAR =====
+window.addEventListener('scroll', () => {
+  const el = document.getElementById('progress');
+  const scrolled = window.scrollY;
+  const total = document.body.scrollHeight - window.innerHeight;
+  el.style.width = (scrolled / total * 100) + '%';
+});
+
+// ===== INTERSECTION OBSERVER =====
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.15 });
+document.querySelectorAll('[data-observe]').forEach(el => observer.observe(el));
+
+// ===== AGE COUNTER =====
+(function updateAge() {
+  // Birthday: May 19 — adjust year as needed
+  const birthday = new Date('1995-05-19T00:00:00');
+  const now = new Date();
+  const diff = now - birthday;
+  const totalDays = Math.floor(diff / 86400000);
+  const years = Math.floor(totalDays / 365.25);
+  const days = Math.floor(totalDays % 365.25);
+  const hours = now.getHours();
+  const mins = now.getMinutes();
+  document.getElementById('c-years').textContent = years;
+  document.getElementById('c-days').textContent = days;
+  document.getElementById('c-hours').textContent = hours;
+  document.getElementById('c-mins').textContent = mins;
+  setTimeout(updateAge, 10000);
+})();
+
+// ===== CANVAS: BALLOONS + SAKURA =====
+(function() {
+  const canvas = document.getElementById('canvas-layer');
+  const ctx = canvas.getContext('2d');
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // ---- SAKURA ----
+  const sakura = [];
+  const SAKURA_COUNT = 45;
+
+  function randomColor() {
+    const colors = ['#ffb7d5','#ffc2de','#ffd6e8','#ffeaf4','#f9a8d4','#f472b6','#e879f9','#d946ef'];
+    return colors[Math.floor(Math.random() * colors.length)];
+  }
+
+  function createPetal() {
+    return {
+      x: Math.random() * window.innerWidth,
+      y: -20,
+      size: 4 + Math.random() * 8,
+      speedY: 0.8 + Math.random() * 1.8,
+      speedX: -0.5 + Math.random() * 1.0,
+      rotation: Math.random() * Math.PI * 2,
+      rotSpeed: (-0.03 + Math.random() * 0.06),
+      opacity: 0.5 + Math.random() * 0.5,
+      color: randomColor(),
+      swing: Math.random() * Math.PI * 2,
+      swingSpeed: 0.01 + Math.random() * 0.02,
+      swingAmp: 1 + Math.random() * 2,
+    };
+  }
+
+  for (let i = 0; i < SAKURA_COUNT; i++) {
+    const p = createPetal();
+    p.y = Math.random() * window.innerHeight;
+    sakura.push(p);
+  }
+
+  function drawPetal(p) {
+    ctx.save();
+    ctx.translate(p.x, p.y);
+    ctx.rotate(p.rotation);
+    ctx.globalAlpha = p.opacity;
+    ctx.beginPath();
+    ctx.ellipse(0, 0, p.size * 0.5, p.size, 0, 0, Math.PI * 2);
+    ctx.fillStyle = p.color;
+    ctx.shadowColor = p.color;
+    ctx.shadowBlur = 8;
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function updatePetal(p) {
+    p.swing += p.swingSpeed;
+    p.x += p.speedX + Math.sin(p.swing) * p.swingAmp;
+    p.y += p.speedY;
+    p.rotation += p.rotSpeed;
+    if (p.y > window.innerHeight + 30 || p.x < -30 || p.x > window.innerWidth + 30) {
+      Object.assign(p, createPetal());
+    }
+  }
+
+  // ---- BALLOONS ----
+  const balloons = [];
+  const BALLOON_COUNT = 18;
+
+  const balloonColors = [
+    ['#ff6b9d','#ff9dc6'],
+    ['#c084fc','#dbb6ff'],
+    ['#f472b6','#fba5d6'],
+    ['#fbbf24','#fde68a'],
+    ['#34d399','#6ee7b7'],
+    ['#60a5fa','#93c5fd'],
+    ['#fb923c','#fdba74'],
+    ['#e879f9','#f0abfc'],
+  ];
+
+  function createBalloon() {
+    const [c1, c2] = balloonColors[Math.floor(Math.random() * balloonColors.length)];
+    return {
+      x: Math.random() * window.innerWidth,
+      y: window.innerHeight + 80 + Math.random() * 200,
+      w: 28 + Math.random() * 22,
+      h: 0,
+      speedY: 0.4 + Math.random() * 0.7,
+      speedX: -0.3 + Math.random() * 0.6,
+      swing: Math.random() * Math.PI * 2,
+      swingSpeed: 0.008 + Math.random() * 0.015,
+      swingAmp: 0.8 + Math.random() * 1.5,
+      c1, c2,
+      opacity: 0.7 + Math.random() * 0.3,
+      stringWave: Math.random() * Math.PI * 2,
+    };
+  }
+
+  for (let i = 0; i < BALLOON_COUNT; i++) {
+    const b = createBalloon();
+    b.h = b.w * 1.3;
+    b.y = Math.random() * window.innerHeight * 1.5;
+    balloons.push(b);
+  }
+
+  function drawBalloon(b) {
+    ctx.save();
+    ctx.globalAlpha = b.opacity;
+    ctx.translate(b.x, b.y);
+
+    // balloon body
+    const grad = ctx.createRadialGradient(-b.w * 0.2, -b.h * 0.2, b.w * 0.05, 0, 0, b.w * 0.8);
+    grad.addColorStop(0, b.c2);
+    grad.addColorStop(1, b.c1);
+
+    ctx.beginPath();
+    ctx.ellipse(0, 0, b.w / 2, b.h / 2, 0, 0, Math.PI * 2);
+    ctx.fillStyle = grad;
+    ctx.shadowColor = b.c1;
+    ctx.shadowBlur = 15;
+    ctx.fill();
+
+    // highlight
+    ctx.beginPath();
+    ctx.ellipse(-b.w * 0.15, -b.h * 0.2, b.w * 0.12, b.h * 0.1, -0.5, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(255,255,255,0.35)';
+    ctx.shadowBlur = 0;
+    ctx.fill();
+
+    // knot
+    ctx.beginPath();
+    ctx.arc(0, b.h / 2, 3, 0, Math.PI * 2);
+    ctx.fillStyle = b.c1;
+    ctx.fill();
+
+    // string
+    ctx.beginPath();
+    ctx.moveTo(0, b.h / 2 + 3);
+    const sw = Math.sin(b.stringWave) * 8;
+    ctx.quadraticCurveTo(sw, b.h / 2 + 25, 0, b.h / 2 + 50);
+    ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    ctx.restore();
+  }
+
+  function updateBalloon(b) {
+    b.swing += b.swingSpeed;
+    b.stringWave += 0.05;
+    b.x += b.speedX + Math.sin(b.swing) * b.swingAmp;
+    b.y -= b.speedY;
+    if (b.y < -b.h - 100) {
+      Object.assign(b, createBalloon());
+      b.h = b.w * 1.3;
+    }
+  }
+
+  // ---- RENDER LOOP ----
+  function loop() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // sakura
+    sakura.forEach(p => { updatePetal(p); drawPetal(p); });
+
+    // balloons
+    balloons.forEach(b => { updateBalloon(b); drawBalloon(b); });
+
+    requestAnimationFrame(loop);
+  }
+  loop();
+
+  // Add new petal/balloon occasionally
+  setInterval(() => {
+    if (sakura.length < SAKURA_COUNT + 10) sakura.push(createPetal());
+  }, 800);
+
+})();
+</script>
+</body>
+</html>
