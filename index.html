@@ -586,9 +586,45 @@
   .band-1 { background: linear-gradient(180deg, transparent, rgba(26,10,46,0.6) 50%, transparent); }
   .band-2 { background: linear-gradient(180deg, transparent, rgba(40,5,20,0.5) 50%, transparent); }
   .band-3 { background: linear-gradient(180deg, transparent, rgba(5,5,20,0.7) 50%, transparent); }
+
+  /* ===== MUSIC BUTTON ===== */
+  .music-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 9999;
+    background: rgba(255, 107, 157, 0.15);
+    border: 1px solid rgba(255, 107, 157, 0.3);
+    color: var(--soft);
+    padding: 12px 20px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+  .music-btn:hover {
+    background: rgba(255, 107, 157, 0.25);
+    transform: translateY(-2px);
+  }
 </style>
 </head>
 <body>
+
+<!-- ===== AUDIO PLAYER ===== -->
+<audio id="bg-music" loop>
+  <!-- Place your romantic birthday music file here and name it 'music.mp3' -->
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<button id="music-btn" class="music-btn">
+  🎵 <span id="music-text">Play Music</span>
+</button>
 
 <!-- Progress bar -->
 <div id="progress"></div>
@@ -1148,6 +1184,44 @@ document.querySelectorAll('[data-observe]').forEach(el => observer.observe(el));
     if (sakura.length < SAKURA_COUNT + 10) sakura.push(createPetal());
   }, 800);
 
+})();
+
+// ===== MUSIC PLAYER LOGIC =====
+(function() {
+  const music = document.getElementById('bg-music');
+  const musicBtn = document.getElementById('music-btn');
+  const musicText = document.getElementById('music-text');
+  let isPlaying = false;
+  let hasInteracted = false;
+
+  function toggleMusic() {
+    if (isPlaying) {
+      music.pause();
+      musicText.textContent = "Play Music";
+      isPlaying = false;
+    } else {
+      music.play().then(() => {
+        musicText.textContent = "Pause Music";
+        isPlaying = true;
+      }).catch(err => {
+        console.log("Audio play failed:", err);
+      });
+    }
+  }
+
+  musicBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleMusic();
+    hasInteracted = true;
+  });
+
+  // Play music on first interaction anywhere on the page
+  document.body.addEventListener('click', () => {
+    if (!hasInteracted && !isPlaying) {
+      toggleMusic();
+      hasInteracted = true;
+    }
+  }, { once: true });
 })();
 </script>
 </body>
