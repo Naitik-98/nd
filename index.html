@@ -988,20 +988,22 @@ document.querySelectorAll('[data-observe]').forEach(el => observer.observe(el));
 
 // ===== AGE COUNTER =====
 (function updateAge() {
-  // Birthday: May 19 — adjust year as needed
   const birthday = new Date('2010-05-19T00:00:00');
   const now = new Date();
   const diff = now - birthday;
-  const totalDays = Math.floor(diff / 86400000);
+  
+  const totalDays = Math.floor(diff / (1000 * 60 * 60 * 24));
   const years = Math.floor(totalDays / 365.25);
   const days = Math.floor(totalDays % 365.25);
-  const hours = now.getHours();
-  const mins = now.getMinutes();
+  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+  const mins = Math.floor((diff / (1000 * 60)) % 60);
+  
   document.getElementById('c-years').textContent = years;
   document.getElementById('c-days').textContent = days;
   document.getElementById('c-hours').textContent = hours;
   document.getElementById('c-mins').textContent = mins;
-  setTimeout(updateAge, 10000);
+  
+  setTimeout(updateAge, 1000);
 })();
 
 // ===== CANVAS: BALLOONS + SAKURA =====
